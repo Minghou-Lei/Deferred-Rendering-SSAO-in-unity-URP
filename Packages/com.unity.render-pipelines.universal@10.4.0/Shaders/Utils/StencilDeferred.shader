@@ -216,6 +216,7 @@ Shader "Hidden/Universal Render Pipeline/StencilDeferred"
 			light, posWS.xyz, shadowMask, materialReceiveShadowsOff);
 		#endif
 
+
 		#if defined(_SCREEN_SPACE_OCCLUSION)
 		unityLight.color *= aoFactor.directAmbientOcclusion;
 		#endif
@@ -239,14 +240,12 @@ Shader "Hidden/Universal Render Pipeline/StencilDeferred"
 
 	half4 FragFog(Varyings input) : SV_Target
 	{
-		
 		float d = LOAD_TEXTURE2D_X(_CameraDepthTexture, input.positionCS.xy).x;
 		float eye_z = LinearEyeDepth(d, _ZBufferParams);
 		float clip_z = UNITY_MATRIX_P[2][2] * -eye_z + UNITY_MATRIX_P[2][3];
 		half fogFactor = ComputeFogFactor(clip_z);
 		half fogIntensity = ComputeFogIntensity(fogFactor);
 		return half4(unity_FogColor.rgb, fogIntensity);
-		
 	}
 	ENDHLSL
 
